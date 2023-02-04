@@ -6,6 +6,8 @@ const NoteState = (props) => {
     const initialNotes = []
       const [notes, setNotes] = useState(initialNotes);
 
+
+
       // Fetch all notes 
       const fetchNotes = async(title,description) => {
         //API call 
@@ -19,6 +21,9 @@ const NoteState = (props) => {
         const json = await response.json()
         setNotes(json)
       }
+
+
+
       // Add a note 
       const addNote = async(title,description) => {
         console.log("Adding a note")
@@ -44,11 +49,24 @@ const NoteState = (props) => {
       }
 
 
+
+
       // Delete a note 
-      const deleteNote = (id) => {
+      const deleteNote = async(id) => {
+        // API call
+        const response = await fetch(`${host}/api/notes/deletenote/${id}`,{
+          method : 'DELETE',
+          headers : {
+            'Content-Type': 'application/json',
+            'auth-token' : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjNkYjRhNjE3Y2RkMjViZDE3OTRkYzQ2In0sImlhdCI6MTY3NTM0OTMzOH0.oq9MV6ixmMq2cprleCYqFokAgQxUbh0eeoiyV1jP0zc'
+          },
+        })
+        const json = await response.json()
         const newNotes = notes.filter((note) => {return note._id !== id})
         setNotes(newNotes)
       }
+
+
 
       // Edit a note 
       const editNote = async(id,title,description) => {
@@ -72,6 +90,8 @@ const NoteState = (props) => {
         }
         
       }
+
+
     return (
         <NoteContext.Provider value = {{notes,addNote,editNote,deleteNote, setNotes,fetchNotes}}>
             {props.children}
