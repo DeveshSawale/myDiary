@@ -9,7 +9,7 @@ const NoteState = (props) => {
 
 
       // Fetch all notes 
-      const fetchNotes = async(title,description) => {
+      const fetchNotes = async() => {
         //API call 
         const response = await fetch(`${host}/api/notes/fetchnotes`,{
           method : 'GET',
@@ -36,15 +36,7 @@ const NoteState = (props) => {
           },
           body : JSON.stringify({title,description})
         })
-
-        let note = {
-          "_id": "63dbfd61d3ad5af63453565d",
-          "user": "63db4a617cdd25bd1794dc46",
-          "title": title,
-          "description": description,
-          "date": "2023-02-02T18:13:53.161Z",
-          "__v": 0
-        }
+        const note = await response.json();
         setNotes(notes.concat(note))
       }
 

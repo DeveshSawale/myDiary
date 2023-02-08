@@ -51,24 +51,27 @@ const Notes = () => {
               <form className="my-3">
                 <div className="mb-3">
                   <label htmlFor="title" className="form-label">title</label>
-                  <input type="text" className="form-control" value={note.etitle} id="etitle" name="etitle" aria-describedby="emailHelp" onChange={OnChange} />
+                  <input type="text" className="form-control" value={note.etitle} id="etitle" name="etitle" aria-describedby="emailHelp" onChange={OnChange} required minLength={5} />
                 </div>
                 <div className="mb-3">
                   <label htmlFor="description" className="form-label">Description</label>
-                  <input type="text" className="form-control" value={note.edescription} id="edescription" name="edescription" onChange={OnChange} />
+                  <input type="text" className="form-control" value={note.edescription} id="edescription" name="edescription" onChange={OnChange} required minLength={5} />
                 </div>
               </form>
             </div>
             {/* modal content till here */}
             <div className="modal-footer">
               <button ref = {refClose} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" className="btn btn-primary" onClick={handleClick}>Update Note</button>
+              <button disabled = {note.etitle.length<5 || note.edescription.length < 5} type="button" className="btn btn-primary" onClick={handleClick}>Update Note</button>
             </div>
           </div>
         </div>
       </div>
       <div className="row my-5">
         <h2>Your Notes </h2>
+        <div className='container mx-2'>
+          {notes.length === 0 && "No Notes to display"}
+        </div>
         {notes.map((note) => {
           return <Note key={note._id} note={note} updateNote={updateNote} />;
         })}

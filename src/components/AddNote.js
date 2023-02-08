@@ -10,6 +10,7 @@ const AddNote = () => {
     const handleSubmit = (e) => {
         e.preventDefault(); // does not let the page to reload itself
         addNote(note.title, note.description)
+        setNote({title : "", description : ""})
     }
 
     const OnChange = (e) => {
@@ -22,13 +23,13 @@ const AddNote = () => {
             <form className="my-3">
                 <div className="mb-3">
                     <label htmlFor="title" className="form-label">title</label>
-                    <input type="text" className="form-control" id="title" name = "title" aria-describedby="emailHelp" onChange={OnChange} />
+                    <input type="text" className="form-control" id="title" name = "title" aria-describedby="emailHelp" value={note.title} onChange={OnChange}  required minLength={5}/>
                 </div>
                 <div className="mb-3">
                     <label htmlFor="description" className="form-label">Description</label>
-                    <input type="text" className="form-control" id="description" name = "description" onChange={OnChange}/>
+                    <input type="text" className="form-control" id="description" name = "description" value={note.description} onChange={OnChange} required minLength={5}/>
                 </div>
-                <button type="submit" className="btn btn-primary" onClick={handleSubmit}>Add Note</button>
+                <button disabled = {note.title.length<5 || note.description.length < 5} type="submit" className="btn btn-primary" onClick={handleSubmit}>Add Note</button>
             </form>
         </div>
     )
